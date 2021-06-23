@@ -9,7 +9,7 @@ cloud storage transfer cli
 ```bash
 go build 
 #或者通过-o 参数指定编译输出可执行文件名
-go build -o cstc 
+go build -o cstcli 
 ```
 跨平台编译可以参考我在[CSDN的go博客](https://blog.csdn.net/JadeJones/article/details/118096463#2.4%20%E8%B7%A8%E5%B9%B3%E5%8F%B0%E7%BC%96%E8%AF%91) 这篇文章下面的跨平台编译
 https://blog.csdn.net/JadeJones/article/details/118096463#2.4%20%E8%B7%A8%E5%B9%B3%E5%8F%B0%E7%BC%96%E8%AF%91
