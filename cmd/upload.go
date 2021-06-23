@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"path"
 
-	"github.com/go-jones/cstc/internal/cloudstorage"
-	"github.com/go-jones/cstc/internal/cloudstorage/provider/alicloud"
+	"github.com/go-jones/cstc/pkg/cloudstorage"
+	"github.com/go-jones/cstc/pkg/cloudstorage/provider/alicloud"
 	"github.com/spf13/cobra"
 )
 
