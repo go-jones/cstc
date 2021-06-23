@@ -2,14 +2,15 @@ package cmd
 
 import (
 	"fmt"
+	"path"
 
 	"github.com/spf13/cobra"
 )
 
 var getCmd = &cobra.Command{
 	Use:   "get",
-	Short: "下载文件到本地",
-	Long:  `下载云存储文件到本地`,
+	Short: "download cloud storage to local",
+	Long:  `download cloud storage to local`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		p, err := getProvider()
 		if err != nil {
@@ -18,13 +19,13 @@ var getCmd = &cobra.Command{
 		if putfilename == "" {
 			return fmt.Errorf("Download file path is missing")
 		}
-		day := defaultdir
-		fn := putfilename
-		ok := fmt.Sprintf("%s/%s", day, fn)
+		// day := defaultdir
+		// fn := putfilename
+		// ok := fmt.Sprintf("%s/%s", day, fn)
 		if getfilename == "" {
-			getfilename = putfilename
+			getfilename = path.Base(putfilename)
 		}
-		err = p.GetFile(buckName, ok, getfilename)
+		err = p.GetFile(buckName, putfilename, getfilename)
 		if err != nil {
 			return err
 		}

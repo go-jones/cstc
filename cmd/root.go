@@ -8,7 +8,15 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const defaultdir  = "20210623"
+const (
+	// BuckName todo
+	defaultBuckName = ""
+	defaultEndpoint = ""
+	defaultALIAK    = ""
+	defaultALISK    = ""
+	defaultdir      = "cstc"
+)
+
 var (
 	storageProvider string
 	EndpointType    string
