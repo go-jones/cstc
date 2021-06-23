@@ -54,11 +54,11 @@ Flags:
 ```
 例子1 不提供下载地址仅上传
 ```bash
-cstc upload -f go.sum -e bucket_endpoint -i access_id -k access_key -b bucket_name
+cstcli upload -f go.sum -e bucket_endpoint -i access_id -k access_key -b bucket_name
 ```
 例子2 提供临时3天的下载地址
 ```bash
-cstc upload -f go.sum -e bucket_endpoint -i access_id -k access_key -b bucket_name -u true
+cstcli upload -f go.sum -e bucket_endpoint -i access_id -k access_key -b bucket_name -u true
 ```
 
 ## 下载
