@@ -19,7 +19,7 @@ var watchCmd = &cobra.Command{
 
 		// fn := path.Base(watchFilePath)
 		// ok := fmt.Sprintf("%s/%s", day, fn)
-		err = p.WatchFile(buckName, watchFileDir, watchFilePrefix, watchFileMaxkeys)
+		err = p.WatchFile(buckName, watchFilePrefix, watchFileMaxkeys)
 		if err != nil {
 			return err
 		}
@@ -29,7 +29,6 @@ var watchCmd = &cobra.Command{
 
 func init() {
 	watchCmd.PersistentFlags().StringVarP(&watchFilePrefix, "watch_prefix", "x", "", "watch cloud storage file prefix ")
-	watchCmd.PersistentFlags().StringVarP(&watchFileDir, "watch_dir", "d", "", "watch cloud storage dir file ")
 	watchCmd.PersistentFlags().IntVarP(&watchFileMaxkeys, "watch_Max", "m", 100, "watch cloud storage file max")
 	watchCmd.PersistentFlags().StringVarP(&buckName, "bucket_name", "b", defaultBuckName, "cloud storage bucket name")
 	watchCmd.PersistentFlags().StringVarP(&bucketEndpoint, "bucket_endpoint", "e", defaultEndpoint, "cloud storage endpoint")

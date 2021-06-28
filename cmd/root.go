@@ -30,7 +30,6 @@ var (
 	buckName         string
 	uploadFilePath   string
 	watchFilePrefix  string
-	watchFileDir     string
 	watchFileMaxkeys int
 	bucketEndpoint   string
 	public           string

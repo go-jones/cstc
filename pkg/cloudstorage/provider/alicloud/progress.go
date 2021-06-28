@@ -11,6 +11,15 @@ var (
 	validate = validator.New()
 )
 
+const (
+	bu = 1 << 10 // 1024
+	kb = 1 << 20 // 1024 * 1024
+	mb = 1 << 30 // 1024 * 1024 * 1024
+	gb = 1 << 40
+	tb = 1 << 50
+	eb = 1 << 60
+)
+
 // NewProvider todo
 func NewProvider(endpoint, accessID, accessKey string) (*Provider, error) {
 	p := &Provider{
@@ -115,26 +124,26 @@ func (p *Provider) GetFile(bucketName, objectKey, localFilePath string) error {
 	return nil
 }
 
-func (p *Provider) WatchFile(bucketName, watchFileDir, watchFilePrefix string, maxkeys int) error {
+func (p *Provider) WatchFile(bucketName, watchFilePrefix string, maxkeys int) error {
 	bucket, err := p.GetBucket(bucketName)
 	if err != nil {
 		return err
 	}
 	continueToken := ""
-	marker := oss.Marker(watchFileDir)
-	watchFilePrefix = fmt.Sprintf("%s/%s", watchFileDir, watchFilePrefix)
+	marker := oss.Marker("")
+	fmt.Println(watchFilePrefix)
 	prefix := oss.Prefix(watchFilePrefix)
+	// fmt.Println("对象名称      文件大小(b)      最后修改时间      存储类型")
 	for {
 		lsRes, err := bucket.ListObjectsV2(marker, prefix, oss.MaxKeys(maxkeys), oss.ContinuationToken(continueToken))
 		if err != nil {
-			return fmt.Errorf("watch cloud storge file : %s error, %s", watchFileDir, err)
+			return fmt.Errorf("watch cloud storge file : %s error, %s", watchFilePrefix, err)
 		}
 		fmt.Println("对象名称      文件大小(b)      最后修改时间      存储类型")
 		for _, object := range lsRes.Objects {
 			// fmt.Println(object.Key, object.Type, object.Size, object.ETag, object.LastModified, object.StorageClass)
-			fmt.Println(object.Key,  object.Size, object.LastModified, object.StorageClass)
+			fmt.Println(object.Key, HumanBytesLoaded(object.Size), object.LastModified, object.StorageClass)
 		}
-
 		if lsRes.IsTruncated {
 			continueToken = lsRes.NextContinuationToken
 		} else {
@@ -142,4 +151,21 @@ func (p *Provider) WatchFile(bucketName, watchFileDir, watchFilePrefix string, m
 		}
 	}
 	return nil
+}
+
+// HumanBytesLoaded 单位转换  1023 1023Byte  - 1024  1KB
+func HumanBytesLoaded(bytesLength int64) string {
+	if bytesLength < bu {
+		return fmt.Sprintf("%dB", bytesLength)
+	} else if bytesLength < kb {
+		return fmt.Sprintf("%.2fKB", float64(bytesLength)/float64(bu))
+	} else if bytesLength < mb {
+		return fmt.Sprintf("%.2fMB", float64(bytesLength)/float64(kb))
+	} else if bytesLength < gb {
+		return fmt.Sprintf("%.2fGB", float64(bytesLength)/float64(mb))
+	} else if bytesLength < tb {
+		return fmt.Sprintf("%.2fTB", float64(bytesLength)/float64(gb))
+	} else {
+		return fmt.Sprintf("%.2fEB", float64(bytesLength)/float64(tb))
+	}
 }
