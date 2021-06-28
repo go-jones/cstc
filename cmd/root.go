@@ -10,7 +10,7 @@ import (
 
 const (
 	// BuckName todo
-	defaultBuckName = ""
+	defaultBuckName = "rsto"
 	defaultEndpoint = ""
 	defaultALIAK    = ""
 	defaultALISK    = ""
@@ -25,14 +25,16 @@ var (
 )
 
 var (
-	putfilename		string
-	getfilename     string
-	buckName       string
-	uploadFilePath string
-	bucketEndpoint string
-	public         string
+	putfilename      string
+	getfilename      string
+	buckName         string
+	uploadFilePath   string
+	watchFilePrefix  string
+	watchFileDir     string
+	watchFileMaxkeys int
+	bucketEndpoint   string
+	public           string
 )
-
 
 var RootCmd = &cobra.Command{
 	Use:   "cstcli",

@@ -66,9 +66,9 @@ func (listener *OssProgressListener) ProgressChanged(event *oss.ProgressEvent) {
 			event.ConsumedBytes, event.TotalBytes)
 	case oss.TransferDataEvent:
 		if event.TotalBytes != 0 {
-            fmt.Printf("\rTransfer Data, ConsumedBytes: %d, TotalBytes %d, %d%%.",
-                event.ConsumedBytes, event.TotalBytes, event.ConsumedBytes*100/event.TotalBytes)
-        }
+			fmt.Printf("\rTransfer Data, ConsumedBytes: %d, TotalBytes %d, %d%%.",
+				event.ConsumedBytes, event.TotalBytes, event.ConsumedBytes*100/event.TotalBytes)
+		}
 		fmt.Printf("\rTransfer Data, ConsumedBytes: %d, TotalBytes %d, %d%%.",
 			event.ConsumedBytes, event.TotalBytes, event.ConsumedBytes*100/event.TotalBytes)
 	case oss.TransferCompletedEvent:
@@ -111,6 +111,35 @@ func (p *Provider) GetFile(bucketName, objectKey, localFilePath string) error {
 	err = bucket.GetObjectToFile(objectKey, localFilePath, oss.Progress(&OssProgressListener{}))
 	if err != nil {
 		return fmt.Errorf("download cloud storge file to local: %s error, %s", bucketName, err)
+	}
+	return nil
+}
+
+func (p *Provider) WatchFile(bucketName, watchFileDir, watchFilePrefix string, maxkeys int) error {
+	bucket, err := p.GetBucket(bucketName)
+	if err != nil {
+		return err
+	}
+	continueToken := ""
+	marker := oss.Marker(watchFileDir)
+	watchFilePrefix = fmt.Sprintf("%s/%s", watchFileDir, watchFilePrefix)
+	prefix := oss.Prefix(watchFilePrefix)
+	for {
+		lsRes, err := bucket.ListObjectsV2(marker, prefix, oss.MaxKeys(maxkeys), oss.ContinuationToken(continueToken))
+		if err != nil {
+			return fmt.Errorf("watch cloud storge file : %s error, %s", watchFileDir, err)
+		}
+		fmt.Println("对象名称      文件大小(b)      最后修改时间      存储类型")
+		for _, object := range lsRes.Objects {
+			// fmt.Println(object.Key, object.Type, object.Size, object.ETag, object.LastModified, object.StorageClass)
+			fmt.Println(object.Key,  object.Size, object.LastModified, object.StorageClass)
+		}
+
+		if lsRes.IsTruncated {
+			continueToken = lsRes.NextContinuationToken
+		} else {
+			break
+		}
 	}
 	return nil
 }
