@@ -85,7 +85,44 @@ cstcli get -f go.sum -e bucket_endpoint -i access_id -k access_key -b bucket_nam
 cstcli get -f go.sum  -o ../../go2.sum -e bucket_endpoint -i access_id -k access_key -b bucket_name
 ```
 
+## 查看
+
+```
+watch cloud storage file
+
+Usage:
+  cstcli watch [flags]
+
+Flags:
+  -e, --bucket_endpoint string   cloud storage endpoint
+  -b, --bucket_name string       cloud storage bucket name (default "rsto")
+  -h, --help                     help for watch
+  -m, --watch_Max int            watch cloud storage file max (default 100)
+  -x, --watch_prefix string      watch cloud storage file prefix
+```
+
+例子1 默认查看存储桶中所有文件(分页展示,每页默认100可通过-m修改)
+
+```
+cstcli watch -x csts -e bucket_endpoint -i access_id -k access_key -b bucket_name
+```
+
+例子2 分页查看csts目录下的所有文件(包括该目录下目录)
+
+```
+cstcli watch -x csts -e bucket_endpoint -i access_id -k access_key -b bucket_name
+```
+
+例子3 分页查看csts目录下包含指定前缀(golang)的文件
+
+```
+cstcli watch -x csts/golang -e bucket_endpoint -i access_id -k access_key -b bucket_name
+```
+
+
+
 # 提示
+
 1. 默认上传地址为 bucket_name/cstc 有公开下载地址的文件保存在bucket_name/cstc_tmp
 2. access_key与access_id 在对应云上请参考最佳实践, 尽量将权限控制到足够安全。例如下面阿里云的策略。建议创建编程用户并授权
 https://help.aliyun.com/document_detail/141923.html
