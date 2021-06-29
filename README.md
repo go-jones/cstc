@@ -104,19 +104,19 @@ Flags:
 例子1 默认查看存储桶中所有文件(分页展示,每页默认100可通过-m修改)
 
 ```
-cstcli watch -x csts -e bucket_endpoint -i access_id -k access_key -b bucket_name
+cstcli watch -x cstc -e bucket_endpoint -i access_id -k access_key -b bucket_name
 ```
 
-例子2 分页查看csts目录下的所有文件(包括该目录下目录)
+例子2 分页查看cstc目录下的所有文件(包括该目录下目录)
 
 ```
-cstcli watch -x csts -e bucket_endpoint -i access_id -k access_key -b bucket_name
+cstcli watch -x cstc -e bucket_endpoint -i access_id -k access_key -b bucket_name
 ```
 
-例子3 分页查看csts目录下包含指定前缀(golang)的文件
+例子3 分页查看cstc目录下包含指定前缀(golang)的文件
 
 ```
-cstcli watch -x csts/golang -e bucket_endpoint -i access_id -k access_key -b bucket_name
+cstcli watch -x cstc/golang -e bucket_endpoint -i access_id -k access_key -b bucket_name
 ```
 
 
