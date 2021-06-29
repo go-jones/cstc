@@ -95,7 +95,7 @@ Usage:
 
 Flags:
   -e, --bucket_endpoint string   cloud storage endpoint
-  -b, --bucket_name string       cloud storage bucket name (default "rsto")
+  -b, --bucket_name string       cloud storage bucket name 
   -h, --help                     help for watch
   -m, --watch_Max int            watch cloud storage file max (default 100)
   -x, --watch_prefix string      watch cloud storage file prefix
