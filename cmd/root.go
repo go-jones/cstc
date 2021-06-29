@@ -10,7 +10,7 @@ import (
 
 const (
 	// BuckName todo
-	defaultBuckName = "rsto"
+	defaultBuckName = ""
 	defaultEndpoint = ""
 	defaultALIAK    = ""
 	defaultALISK    = ""
